@@ -6,15 +6,15 @@ import com.unikom.partnerservice.dto.response.SuccessResponse;
 import com.unikom.partnerservice.dto.response.SuccessResponseList;
 import com.unikom.partnerservice.service.impl.PartnerServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 
 @Transactional
 @RestController
@@ -24,6 +24,14 @@ import javax.validation.Valid;
 public class PartnerController {
 
     private PartnerServiceImpl partnerService;
+
+    //    Test code
+    @GetMapping("/test")
+    public List<PartnerDTO> findAll() {
+        Search search = new Search();
+        Pageable pageable = PageRequest.of(0, 10);
+        return partnerService.search(search, pageable);
+    }
 
     @GetMapping
     public ResponseEntity<?> search(@RequestParam(required = false) String code,
