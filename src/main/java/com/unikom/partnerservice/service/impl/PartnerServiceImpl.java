@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.social.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
 public class PartnerServiceImpl implements IPartnerServices {
 
     @Autowired
@@ -79,7 +81,7 @@ public class PartnerServiceImpl implements IPartnerServices {
         builder.append(" SELECT p ");
         builder.append(" FROM Partner p ");
         builder.append(" WHERE 1=1 ");
-        builder.append(" AND isDeleteed = 0 ");
+        builder.append(" AND isDeleted = 0 ");
 
         Map<String, Object> params = new HashMap<>();
 
@@ -128,7 +130,7 @@ public class PartnerServiceImpl implements IPartnerServices {
         return convertToDTO(partnerDTOp.getContent());
     }
 
-    private List<PartnerDTO> convertToDTO(List<Partner> partnerEntities) {
+    public List<PartnerDTO> convertToDTO(List<Partner> partnerEntities) {
         List<PartnerDTO> partnerDTOs = new ArrayList<>();
         for (Partner partner : partnerEntities) {
             partnerDTOs.add(new PartnerDTO(partner));

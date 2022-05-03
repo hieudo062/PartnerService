@@ -31,7 +31,7 @@ public class PartnerDTO {
 
     private int startToCooperate;
 
-    private Boolean isDeleteed;
+    private Boolean isDeleted;
 
     public void update(PartnerDTO source) {
         BeanUtils.copyProperties(source, this, "id");
