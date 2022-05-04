@@ -118,10 +118,10 @@ public class PartnerServiceImpl implements IPartnerServices {
 
     @Override
     public PartnerDTO update(Long id, PartnerDTO partnerDTO) {
-        PartnerDTO p = partnerRepository.findByIdAndIsDeletedIsFalse(id).map(PartnerDTO::new).orElseThrow(() -> new ResourceNotFoundException("Partner", "Partner does not exist!"));
-        p.update(partnerDTO);
-        partnerRepository.save(new Partner(p));
-        return p;
+        PartnerDTO partner = partnerRepository.findByIdAndIsDeletedIsFalse(id).map(PartnerDTO::new).orElseThrow(() -> new ResourceNotFoundException("Partner", "Partner does not exist!"));
+        partner.update(partnerDTO);
+        partnerRepository.save(new Partner(partner));
+        return partner;
     }
 
     @Override
@@ -130,6 +130,12 @@ public class PartnerServiceImpl implements IPartnerServices {
         return convertToDTO(partnerDTOp.getContent());
     }
 
+    @Override
+    public List<PartnerDTO> findAllNoPaging(){
+        return convertToDTO(partnerRepository.findAll());
+    }
+
+    @Override
     public List<PartnerDTO> convertToDTO(List<Partner> partnerEntities) {
         List<PartnerDTO> partnerDTOs = new ArrayList<>();
         for (Partner partner : partnerEntities) {

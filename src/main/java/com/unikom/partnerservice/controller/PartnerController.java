@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.List;
 
 @Transactional
 @RestController
@@ -24,14 +23,6 @@ import java.util.List;
 public class PartnerController {
 
     private PartnerServiceImpl partnerService;
-
-    //    Test code
-    @GetMapping("/test")
-    public List<PartnerDTO> findAll() {
-        Search search = new Search();
-        Pageable pageable = PageRequest.of(0, 10);
-        return partnerService.search(search, pageable);
-    }
 
     @GetMapping
     public ResponseEntity<?> search(@RequestParam(required = false) String code,
@@ -46,14 +37,6 @@ public class PartnerController {
         return new ResponseEntity<>(new SuccessResponseList(1, partnerService.count(search), partnerService.search(search, pageable)), HttpStatus.OK);
     }
 
-//    @GetMapping()
-//    public ResponseEntity<?> findAll(@RequestParam(required = true, defaultValue = "1") int page,
-//                                     @RequestParam(required = true, defaultValue = "10") int size) {
-//        Pageable pageable = PageRequest.of(page - 1, size);
-//        Search search = new Search();
-//        return new ResponseEntity<>(new SuccessResponseList(1, partnerService.count(search), partnerService.findAll(pageable)), HttpStatus.OK);
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return new ResponseEntity<>(new SuccessResponse(1, partnerService.findById(id)), HttpStatus.OK);
@@ -61,7 +44,7 @@ public class PartnerController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid PartnerDTO partner) {
-        return new ResponseEntity<>(new SuccessResponse(1, partnerService.save(partner)), HttpStatus.OK);
+        return new ResponseEntity<>(new SuccessResponse(1, partnerService.save(partner)), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
@@ -72,6 +55,14 @@ public class PartnerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         return new ResponseEntity<>(new SuccessResponse(1, partnerService.delete(id)), HttpStatus.OK);
+    }
+
+    @GetMapping("/findAll")
+    public ResponseEntity<?> findAll(){
+        Search search = new Search();
+        long totalRecord = partnerService.count(search);
+        Pageable pageable = PageRequest.of(0, (int) totalRecord);
+        return new ResponseEntity<>(new SuccessResponseList(1, partnerService.count(search), partnerService.search(search, pageable)), HttpStatus.OK);
     }
 
 
