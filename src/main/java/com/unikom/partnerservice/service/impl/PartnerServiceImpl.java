@@ -130,10 +130,6 @@ public class PartnerServiceImpl implements IPartnerServices {
         return convertToDTO(partnerDTOp.getContent());
     }
 
-    @Override
-    public List<PartnerDTO> findAllNoPaging(){
-        return convertToDTO(partnerRepository.findAll());
-    }
 
     @Override
     public List<PartnerDTO> convertToDTO(List<Partner> partnerEntities) {

@@ -15,6 +15,5 @@ public interface IPartnerServices {
     PartnerDTO update(Long id, PartnerDTO partnerDTO);
     long count(Search search);
     List<PartnerDTO> findAll(Pageable pageable);
-    List<PartnerDTO> findAllNoPaging();
     public List<PartnerDTO> convertToDTO(List<Partner> partnerEntities);
 }
